@@ -57,7 +57,9 @@ FashionIQ and CIRR, with images, are available from the Hugging Face mirror
 bash scripts/download_data.sh
 ```
 
-See [`data/README.md`](data/README.md) for official sources and CIRCO.
+See [`data/README.md`](data/README.md) for the folder layout, and
+[`docs/DATASETS.md`](docs/DATASETS.md) for every CIR benchmark and training set
+with official sources, mirrors, metrics and gotchas.
 
 ## Running
 
