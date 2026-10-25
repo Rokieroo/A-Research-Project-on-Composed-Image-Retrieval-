@@ -112,7 +112,34 @@ git pull
 git branch -d feature/cirr-loader
 ```
 
-## 4. Running experiments the reproducible way
+## 4. Continuous integration (CI)
+
+Every push to `main` and every pull request runs the checks in
+`.github/workflows/ci.yml` on GitHub Actions:
+
+| Job | What it does |
+|---|---|
+| **lint** | `ruff check .` finds errors and unsorted imports; `ruff format --check .` checks formatting |
+| **test** | `pytest` on Python 3.10 and 3.12: the metric tests and a check that every file in `configs/` is valid |
+
+CI installs only `requirements-ci.txt` (numpy, pyyaml, pytest), so it runs in
+about a minute and never downloads torch or any dataset. Keep tests small and
+data-free so this stays true.
+
+Run the same checks before you push:
+
+```bash
+pip install ruff
+ruff check .
+ruff format .        # fixes formatting in place
+pytest
+```
+
+On a pull request, the checks appear at the bottom of the page. A green tick
+means it's safe to merge. If one is red, click **Details** to see the log, fix
+the problem on your branch, and push again; the checks re-run on their own.
+
+## 5. Running experiments the reproducible way
 
 1. Copy a config: `cp configs/baseline_clip.yaml configs/my_experiment.yaml`,
    then edit it and give it a new `name`.
@@ -129,7 +156,7 @@ Outputs go to `outputs/` and weights to `checkpoints/`. Neither is committed.
 Upload weights you want to keep to Hugging Face Hub or Google Drive and link
 them in `checkpoints/README.md`.
 
-## 5. Where things go
+## 6. Where things go
 
 | What | Where |
 |---|---|
@@ -141,7 +168,7 @@ them in `checkpoints/README.md`.
 | Results table | `experiments/README.md` |
 | Tests | `tests/` (run with `pytest`) |
 
-## 6. Fixing common problems
+## 7. Fixing common problems
 
 | Problem | Fix |
 |---|---|
@@ -151,11 +178,12 @@ them in `checkpoints/README.md`.
 | Staged a file by mistake | `git restore --staged path/to/file` |
 | Committed a huge file | Don't push. Remove it with `git rm --cached <file>`, add it to `.gitignore`, then `git commit --amend` |
 | Merge conflict | Open the file, keep the right parts between the `<<<<<<<` and `>>>>>>>` markers, delete the markers, then `git add <file>` and `git commit` (or `git rebase --continue`) |
+| CI is red on your pull request | Click **Details** next to the failing check, reproduce it locally (`ruff check .` or `pytest`), fix, and push |
 | Not sure what state you're in | `git status` always tells you, and usually suggests the next command |
 
 Avoid `git push --force` on `main`. It overwrites history on GitHub.
 
-## 7. Cheat sheet
+## 8. Cheat sheet
 
 ```bash
 git switch main && git pull           # get the latest
@@ -163,5 +191,6 @@ git switch -c feature/name            # new branch
 git status / git diff                 # inspect
 git add <files> && git commit -m "…"  # save a snapshot
 git push -u origin feature/name       # upload, then open a PR on GitHub
+ruff check . && pytest                 # what CI runs
 git log --oneline --graph             # history
 ```
