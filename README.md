@@ -1,5 +1,7 @@
 # A Research Project on Composed Image Retrieval
 
+[![CI](https://github.com/Rokieroo/A-Research-Project-on-Composed-Image-Retrieval-/actions/workflows/ci.yml/badge.svg)](https://github.com/Rokieroo/A-Research-Project-on-Composed-Image-Retrieval-/actions/workflows/ci.yml)
+
 SC203 Computational Thinking research project.
 
 **Composed Image Retrieval (CIR)** searches for a target image using a
@@ -64,7 +66,7 @@ with official sources, mirrors, metrics and gotchas.
 ## Running
 
 ```bash
-pytest                         # check the metrics on toy rankings
+pytest                         # metric tests and config checks (also run by CI)
 bash scripts/run_baseline.sh   # zero-shot CLIP baseline (evaluate.py is still a stub)
 ```
 
