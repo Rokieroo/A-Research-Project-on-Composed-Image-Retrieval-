@@ -15,6 +15,8 @@ similarity to it.
 2. Reproduce a zero-shot CLIP baseline on CIRR and FashionIQ.
 3. Try one improvement and measure it with the standard metrics.
 
+New to Git? Start with the [Git workflow guide](docs/GIT_WORKFLOW.md).
+
 ## Repository layout
 
 ```
