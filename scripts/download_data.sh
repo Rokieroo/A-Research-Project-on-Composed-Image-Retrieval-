@@ -6,7 +6,7 @@ set -euo pipefail
 TARGET="${1:-data/hf_cir_dataset}"
 mkdir -p "$TARGET"
 
-huggingface-cli download BUAADreamer/cir_dataset \
+hf download BUAADreamer/cir_dataset \
   --repo-type dataset \
   --local-dir "$TARGET"
 

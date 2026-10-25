@@ -1,20 +1,16 @@
 """Train a CIR model from a config file.
 
-Usage: python -m src.train --config configs/<name>.yaml
+Usage: python -m src.train --config configs/<name>.yaml [--device cpu]
 """
 
-import argparse
-
-import yaml
+from src.cli import setup_run
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--config", required=True)
-    args = parser.parse_args()
-    with open(args.config) as f:
-        cfg = yaml.safe_load(f)
-    raise NotImplementedError(f"TODO: training loop for {cfg['name']}")
+    cfg, device = setup_run(__doc__)
+    if cfg.train is None:
+        raise SystemExit(f"{cfg.name} has no 'train' section; it is an evaluation-only config")
+    raise NotImplementedError(f"TODO: training loop for {cfg.name}")
 
 
 if __name__ == "__main__":

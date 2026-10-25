@@ -1,0 +1,23 @@
+# Supervised baseline: fine-tune CLIP with sum fusion and InfoNCE on FashionIQ.
+name: finetune_clip_fashioniq
+dataset: fashioniq
+split: val
+data_root: data/
+output_dir: outputs/finetune_clip_fashioniq
+device: auto
+seed: 42
+num_workers: 4
+categories: [dress, shirt, toptee]
+model:
+  backbone: ViT-B-32
+  pretrained: openai
+  fusion: sum
+eval:
+  batch_size: 64
+  recall_ks: [10, 50]
+train:
+  epochs: 10
+  batch_size: 32
+  lr: 1.0e-5
+  weight_decay: 0.01
+  temperature: 0.07

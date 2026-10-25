@@ -29,8 +29,10 @@ src/
   models/           encoders, fusion (phi), textual inversion
   losses.py         InfoNCE, triplet
   metrics.py        Recall@K, Recall_subset@K, mAP@K
+  config.py         load and validate configs, pick device, set seed
   train.py
   evaluate.py
+  check_env.py      check that the installed libraries work together
 scripts/            download_data.sh, run_baseline.sh
 notebooks/          exploration and visualisation
 experiments/        results table (small files only)
@@ -43,11 +45,17 @@ tests/              unit tests (start with metrics)
 
 ## Setup
 
+Requires Python 3.12 or newer.
+
 ```bash
 python -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
+python -m src.check_env            # prints library versions, device, and runs a CLIP forward pass
 ```
+
+All library versions in `requirements.txt` are pinned and tested together. For a
+CPU-only or specific CUDA build of torch, see the note at the top of that file.
 
 ## Data
 
@@ -68,6 +76,7 @@ with official sources, mirrors, metrics and gotchas.
 ```bash
 pytest                         # metric tests and config checks (also run by CI)
 bash scripts/run_baseline.sh   # zero-shot CLIP baseline (evaluate.py is still a stub)
+python -m src.evaluate --config configs/baseline_clip.yaml --device cpu   # override the device
 ```
 
 ## Metrics
@@ -81,7 +90,8 @@ bash scripts/run_baseline.sh   # zero-shot CLIP baseline (evaluate.py is still a
 ## Reproducibility
 
 - Data and weights stay out of Git. Commit download scripts and links instead.
-- One config per experiment in `configs/`.
+- One config per experiment in `configs/`. Every field and its default is defined in
+  `src/config.py`, and unknown or invalid fields are rejected before a run starts.
 - Log every result in `experiments/README.md` with its config name and commit hash.
 
 ## Resources

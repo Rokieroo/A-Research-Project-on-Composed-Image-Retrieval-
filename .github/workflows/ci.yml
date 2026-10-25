@@ -12,8 +12,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-      - run: pip install ruff
+          python-version: "3.12"
+      - run: pip install ruff==0.17.2
       - run: ruff check .
       - run: ruff format --check .
 
@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.10", "3.12"]
+        python-version: ["3.12", "3.13"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -32,3 +32,20 @@ jobs:
       # Only light dependencies: the tests do not need torch or any dataset.
       - run: pip install -r requirements-ci.txt
       - run: pytest -v
+
+  # Installs the full requirements.txt (CPU build of torch) and runs a CLIP
+  # forward pass, so a version clash between libraries turns CI red.
+  environment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - run: pip install torch==2.14.1 torchvision==0.29.1 --index-url https://download.pytorch.org/whl/cpu
+      - run: pip install -r requirements.txt
+      - run: pip check
+      - run: python -m src.check_env
+      - run: pytest -q
