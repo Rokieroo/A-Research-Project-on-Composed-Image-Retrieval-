@@ -1,0 +1,14 @@
+# Zero-shot CLIP baseline: query = normalize(img_emb + txt_emb), no training.
+name: baseline_clip
+dataset: cirr            # cirr | fashioniq | circo
+split: val
+data_root: data/
+model:
+  backbone: ViT-B-32     # open_clip model name
+  pretrained: openai
+  fusion: sum            # sum | text_only | image_only
+eval:
+  batch_size: 64
+  recall_ks: [1, 5, 10, 50]
+  subset_ks: [1, 2, 3]   # CIRR only
+output_dir: outputs/baseline_clip

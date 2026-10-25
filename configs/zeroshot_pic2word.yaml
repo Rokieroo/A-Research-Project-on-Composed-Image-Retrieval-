@@ -1,0 +1,18 @@
+# Zero-shot CIR with textual inversion (Pic2Word-style).
+# The image is mapped to a pseudo-word token S*, then the prompt
+# "a photo of S* that {modification text}" is encoded by the text encoder.
+name: zeroshot_pic2word
+dataset: cirr
+split: val
+data_root: data/
+model:
+  backbone: ViT-L-14
+  pretrained: openai
+  fusion: textual_inversion
+  mapping_network_ckpt: null   # path to a pretrained image-to-token mapper
+  prompt_template: "a photo of {token} that {text}"
+eval:
+  batch_size: 64
+  recall_ks: [1, 5, 10, 50]
+  subset_ks: [1, 2, 3]
+output_dir: outputs/zeroshot_pic2word

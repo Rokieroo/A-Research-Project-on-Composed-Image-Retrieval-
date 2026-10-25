@@ -1,0 +1,30 @@
+# Large files stay out of Git
+data/*
+!data/README.md
+checkpoints/*
+!checkpoints/README.md
+outputs/
+wandb/
+runs/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Model weights and arrays (keep these on HF Hub / Drive)
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.npy
+*.npz
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
