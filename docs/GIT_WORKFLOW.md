@@ -4,7 +4,7 @@ A beginner-friendly guide to working on this project with Git and GitHub.
 
 ## 1. One-time setup
 
-Install [Git](https://git-scm.com/downloads) and Python 3.10 or newer, then tell
+Install [Git](https://git-scm.com/downloads) and Python 3.12 or newer, then tell
 Git who you are:
 
 ```bash
@@ -22,7 +22,8 @@ python -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 
-pytest                             # should print "5 passed"
+python -m src.check_env            # library versions, device, CLIP forward pass
+pytest                             # all tests should pass
 ```
 
 Download the data (about 13.6 GB, only needed once). See `data/README.md`
@@ -120,11 +121,15 @@ Every push to `main` and every pull request runs the checks in
 | Job | What it does |
 |---|---|
 | **lint** | `ruff check .` finds errors and unsorted imports; `ruff format --check .` checks formatting |
-| **test** | `pytest` on Python 3.10 and 3.12: the metric tests and a check that every file in `configs/` is valid |
+| **test** | `pytest` on Python 3.12 and 3.13: metric tests and config validation |
+| **environment** | installs the full `requirements.txt` (CPU torch), runs `pip check` and `python -m src.check_env`, so a version clash between libraries turns CI red |
 
-CI installs only `requirements-ci.txt` (numpy, pyyaml, pytest), so it runs in
-about a minute and never downloads torch or any dataset. Keep tests small and
-data-free so this stays true.
+The lint and test jobs install only `requirements-ci.txt` (numpy, pyyaml,
+pytest), so they finish in under a minute. No job downloads a dataset or model
+weights. Keep tests small and data-free so this stays true.
+
+When you change a version in `requirements.txt`, change it in
+`requirements-ci.txt` and `.github/workflows/ci.yml` too.
 
 Run the same checks before you push:
 

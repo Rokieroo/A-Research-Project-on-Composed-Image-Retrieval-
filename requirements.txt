@@ -1,20 +1,33 @@
-# Core
-torch>=2.2
-torchvision>=0.17
-open_clip_torch>=2.24
-transformers>=4.40
-numpy>=1.26
-pillow>=10.0
-pyyaml>=6.0
-tqdm>=4.66
+# Tested together on Python 3.12 and 3.13 (2026-10-25): `pip check` is clean and
+# `python -m src.check_env` passes. Needs Python 3.12 or newer (numpy 2.5).
+#
+# GPU users on Linux get a CUDA build of torch from PyPI by default. For a
+# different CUDA version, or a smaller CPU-only install, install torch and
+# torchvision first using the command from https://pytorch.org/get-started/locally/
+# (keep the versions below), then run `pip install -r requirements.txt`.
 
-# Data download
-huggingface_hub>=0.23
+# Deep learning and CLIP models
+torch==2.14.1
+torchvision==0.29.1
+open_clip_torch==3.3.0
+transformers==5.20.2
 
-# Analysis / notebooks
-pandas>=2.0
-matplotlib>=3.8
-jupyter
+# Datasets and downloads
+datasets==5.1.0
+huggingface_hub==2.3.0
+pillow==13.0.0
 
-# Tests
-pytest>=8.0
+# Core utilities
+numpy==2.5.4
+pyyaml==6.0.3
+tqdm==4.70.1
+
+# Analysis and notebooks
+pandas==3.1.0
+matplotlib==3.11.2
+jupyterlab==4.6.4
+ipykernel==7.4.0
+
+# Development
+pytest==9.1.1
+ruff==0.17.2

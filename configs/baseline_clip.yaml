@@ -1,8 +1,13 @@
 # Zero-shot CLIP baseline: query = normalize(img_emb + txt_emb), no training.
+# All fields are documented in src/config.py.
 name: baseline_clip
 dataset: cirr            # cirr | fashioniq | circo
 split: val
 data_root: data/
+output_dir: outputs/baseline_clip
+device: auto             # auto | cpu | cuda | mps
+seed: 42
+num_workers: 4
 model:
   backbone: ViT-B-32     # open_clip model name
   pretrained: openai
@@ -11,4 +16,3 @@ eval:
   batch_size: 64
   recall_ks: [1, 5, 10, 50]
   subset_ks: [1, 2, 3]   # CIRR only
-output_dir: outputs/baseline_clip

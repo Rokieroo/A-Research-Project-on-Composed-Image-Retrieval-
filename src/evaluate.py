@@ -1,6 +1,6 @@
 """Evaluate a CIR model from a config file.
 
-Usage: python -m src.evaluate --config configs/<name>.yaml
+Usage: python -m src.evaluate --config configs/<name>.yaml [--device cpu]
 
 Steps to implement:
 1. Load the dataset split and the model from the config.
@@ -10,18 +10,12 @@ Steps to implement:
 5. Report metrics from src.metrics and add a row to experiments/README.md.
 """
 
-import argparse
-
-import yaml
+from src.cli import setup_run
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--config", required=True)
-    args = parser.parse_args()
-    with open(args.config) as f:
-        cfg = yaml.safe_load(f)
-    raise NotImplementedError(f"TODO: evaluation for {cfg['name']}")
+    cfg, device = setup_run(__doc__)
+    raise NotImplementedError(f"TODO: evaluation for {cfg.name}")
 
 
 if __name__ == "__main__":

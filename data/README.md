@@ -23,7 +23,7 @@ or by hand:
 
 ```bash
 pip install huggingface_hub
-huggingface-cli download BUAADreamer/cir_dataset --repo-type dataset --local-dir data/hf_cir_dataset
+hf download BUAADreamer/cir_dataset --repo-type dataset --local-dir data/hf_cir_dataset
 ```
 
 After downloading, check the folder structure and move or symlink the

@@ -5,6 +5,10 @@ name: zeroshot_pic2word
 dataset: cirr
 split: val
 data_root: data/
+output_dir: outputs/zeroshot_pic2word
+device: auto
+seed: 42
+num_workers: 4
 model:
   backbone: ViT-L-14
   pretrained: openai
@@ -15,4 +19,3 @@ eval:
   batch_size: 64
   recall_ks: [1, 5, 10, 50]
   subset_ks: [1, 2, 3]
-output_dir: outputs/zeroshot_pic2word
